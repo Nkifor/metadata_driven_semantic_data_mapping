@@ -1,0 +1,36 @@
+[project]
+name = "data-mapping-databricks"
+version = "0.1.0"
+description = "GDPR-aware semantic data mapping and entity resolution project on Databricks"
+requires-python = ">=3.11,<3.12"
+readme = "README.md"
+
+dependencies = [
+    "rapidfuzz==3.9.7",
+    "pydantic==2.8.2",
+    "python-dotenv==1.0.1"
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest==8.3.2",
+    "ruff==0.6.9",
+    "black==24.8.0",
+    "mypy==1.11.2"
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+
+[tool.ruff]
+line-length = 100
+src = ["src", "jobs", "tests"]
+
+[tool.black]
+line-length = 100
+
+[tool.mypy]
+python_version = "3.11"
+strict = false
+ignore_missing_imports = true
