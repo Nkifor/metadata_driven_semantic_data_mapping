@@ -1,36 +1,45 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
 [project]
 name = "data-mapping-databricks"
 version = "0.1.0"
-description = "GDPR-aware semantic data mapping and entity resolution project on Databricks"
-requires-python = ">=3.11,<3.12"
+description = "GDPR-aware semantic data mapping and entity resolution workload for Databricks."
 readme = "README.md"
-
+requires-python = ">=3.11,<3.13"
 dependencies = [
-    "rapidfuzz==3.9.7",
-    "pydantic==2.8.2",
-    "python-dotenv==1.0.1"
+    "pydantic>=2,<3",
+    "pydantic-settings>=2,<3",
+    "pyspark>=3.5,<4",
+    "python-dotenv>=1,<2",
+    "rapidfuzz>=3,<4",
 ]
 
 [project.optional-dependencies]
 dev = [
-    "pytest==8.3.2",
-    "ruff==0.6.9",
-    "black==24.8.0",
-    "mypy==1.11.2"
+    "build>=1.2,<2",
+    "mypy>=1.10,<2",
+    "pytest>=8,<9",
+    "ruff>=0.11,<1",
 ]
+
+[tool.setuptools.packages.find]
+where = ["src"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = ["src"]
+addopts = "-q"
 
 [tool.ruff]
 line-length = 100
-src = ["src", "jobs", "tests"]
+target-version = "py311"
 
-[tool.black]
-line-length = 100
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]
 
 [tool.mypy]
 python_version = "3.11"
-strict = false
+warn_unused_configs = true
 ignore_missing_imports = true
