@@ -1,0 +1,32 @@
+name: Databricks bundle validate
+
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - databricks.yml
+      - jobs/**
+      - .github/workflows/bundle-validate.yml
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  bundle-validate:
+    runs-on: ubuntu-latest
+    # Keep PRs green until repository variables and OIDC are configured.
+    if: ${{ vars.DATABRICKS_HOST != '' && vars.DATABRICKS_CLIENT_ID != '' }}
+    env:
+      DATABRICKS_AUTH_TYPE: github-oidc
+      DATABRICKS_HOST: ${{ vars.DATABRICKS_HOST }}
+      DATABRICKS_CLIENT_ID: ${{ vars.DATABRICKS_CLIENT_ID }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Databricks CLI
+        uses: databricks/setup-cli@main
+
+      - name: Validate bundle
+        run: databricks bundle validate --target dev

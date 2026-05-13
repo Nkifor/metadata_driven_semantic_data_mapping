@@ -42,7 +42,9 @@ def get_dbutils(spark: SparkSession):  # noqa: ANN201
     try:
         from pyspark.dbutils import DBUtils
     except ImportError as exc:  # pragma: no cover - Databricks-only path
-        raise RuntimeError("This smoke test must run on Databricks with dbutils available.") from exc
+        raise RuntimeError(
+            "This smoke test must run on Databricks with dbutils available."
+            ) from exc
     return DBUtils(spark)
 
 
