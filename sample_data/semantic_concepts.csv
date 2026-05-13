@@ -1,0 +1,8 @@
+concept_id,concept_name,canonical_field_name,pii_category,description
+C001,email,email,CONTACT_IDENTIFIER,Customer email address used for deterministic matching.
+C002,phone,phone,CONTACT_IDENTIFIER,Customer phone number used for deterministic matching.
+C003,full name,full_name,DIRECT_IDENTIFIER,Customer display name.
+C004,date of birth,date_of_birth,SENSITIVE_IDENTIFIER,Date of birth used only for controlled matching.
+C005,postal code,postal_code,QUASI_IDENTIFIER,Postal code used as matching feature.
+C006,address,address,QUASI_IDENTIFIER,Street address used as matching feature.
+C007,created timestamp,created_at,NONE,Source-system creation timestamp.

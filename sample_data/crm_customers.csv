@@ -1,0 +1,6 @@
+crm_customer_id,first_name,last_name,email,phone,date_of_birth,address_line,postal_code,country,created_at,updated_at
+CRM-001,Anna,Kowalska,anna.kowalska@example.com,+48 501 100 200,1988-04-12,ul. Prosta 1,00-001,PL,2022-01-10T09:00:00Z,2025-01-05T10:00:00Z
+CRM-002,Jan,Nowak,jan.nowak@example.com,501200300,1979-11-02,ul. Długa 7,30-001,PL,2021-05-12T14:30:00Z,2025-01-06T10:00:00Z
+CRM-003,Maria,Zielinska,maria.zielinska@example.com,+48 501 300 400,1992-08-23,ul. Krótka 4,60-001,PL,2023-02-18T11:15:00Z,2025-01-07T10:00:00Z
+CRM-004,Piotr,Wisniewski,piotr.w@example.com,+48 501 400 500,1985-01-30,ul. Leśna 9,80-001,PL,2020-10-01T08:45:00Z,2025-01-08T10:00:00Z
+CRM-005,Ewa,Wojcik,ewa.wojcik@example.com,+48 501 500 600,1995-12-05,ul. Polna 3,90-001,PL,2024-03-20T13:20:00Z,2025-01-09T10:00:00Z

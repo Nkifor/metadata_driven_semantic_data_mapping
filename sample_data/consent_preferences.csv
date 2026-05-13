@@ -1,0 +1,11 @@
+source_system,source_customer_id,analytics_consent,marketing_consent,consent_updated_at
+CRM,CRM-001,true,true,2024-12-01T10:00:00Z
+CRM,CRM-002,true,false,2024-12-02T10:00:00Z
+CRM,CRM-003,false,false,2024-12-03T10:00:00Z
+CRM,CRM-004,true,true,2024-12-04T10:00:00Z
+CRM,CRM-005,true,true,2024-12-05T10:00:00Z
+ERP,ERP-101,true,true,2024-12-01T10:00:00Z
+ERP,ERP-102,true,false,2024-12-02T10:00:00Z
+ERP,ERP-103,false,false,2024-12-03T10:00:00Z
+ERP,ERP-104,true,true,2024-12-04T10:00:00Z
+ERP,ERP-999,true,true,2024-12-05T10:00:00Z

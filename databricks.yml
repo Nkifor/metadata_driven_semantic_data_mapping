@@ -1,0 +1,74 @@
+bundle:
+  name: data-mapping-databricks
+  databricks_cli_version: ">= 0.229.0"
+
+variables:
+  catalog:
+    description: Unity Catalog catalog created by repo 2.
+    default: mapping_demo_dev
+  spark_version:
+    description: Databricks Runtime version for the ephemeral job cluster.
+    default: 15.4.x-scala2.12
+  node_type_id:
+    description: Azure Databricks node type for the ephemeral job cluster.
+    default: Standard_DS3_v2
+  crm_landing_path:
+    default: /Volumes/mapping_demo_dev/bronze/crm_landing_ext/
+  erp_landing_path:
+    default: /Volumes/mapping_demo_dev/bronze/erp_landing_ext/
+  reference_landing_path:
+    default: /Volumes/mapping_demo_dev/bronze/reference_landing_ext/
+  compliance_landing_path:
+    default: /Volumes/mapping_demo_dev/bronze/compliance_landing_ext/
+  checkpoint_path:
+    default: /Volumes/mapping_demo_dev/bronze/checkpoints_ext/
+  archive_path:
+    default: /Volumes/mapping_demo_dev/bronze/archive_ext/
+  rejected_path:
+    default: /Volumes/mapping_demo_dev/bronze/rejected_ext/
+
+targets:
+  dev:
+    default: true
+    mode: development
+    workspace:
+      # Local development uses DEFAULT profile unless we pass --profile explicitly.
+      root_path: /Workspace/Users/${workspace.current_user.userName}/.bundle/${bundle.name}/${bundle.target}
+
+resources:
+  jobs:
+    gdpr_mapping_pipeline:
+      name: gdpr_mapping_pipeline_${bundle.target}
+      description: GDPR-aware semantic data mapping and entity resolution pipeline.
+      max_concurrent_runs: 1
+      job_clusters:
+        - job_cluster_key: gdpr_mapping_job_cluster
+          new_cluster:
+            spark_version: ${var.spark_version}
+            node_type_id: ${var.node_type_id}
+            num_workers: 0
+            data_security_mode: SINGLE_USER
+            spark_conf:
+              spark.databricks.cluster.profile: singleNode
+              spark.master: local[*]
+            custom_tags:
+              ResourceClass: SingleNode
+              Project: data-mapping
+              Environment: ${bundle.target}
+      tasks:
+        - task_key: 00_external_volume_smoke_test
+          description: Checks that Unity Catalog external volumes are accessible for read/write/delete.
+          job_cluster_key: gdpr_mapping_job_cluster
+          spark_python_task:
+            python_file: ./jobs/00_external_volume_smoke_test.py
+            parameters:
+              - --catalog
+              - ${var.catalog}
+              - --paths
+              - ${var.crm_landing_path}
+              - ${var.erp_landing_path}
+              - ${var.reference_landing_path}
+              - ${var.compliance_landing_path}
+              - ${var.checkpoint_path}
+              - ${var.archive_path}
+              - ${var.rejected_path}

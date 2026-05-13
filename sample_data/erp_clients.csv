@@ -1,0 +1,6 @@
+erp_client_id,client_full_name,email_address,mobile_number,birth_date,street_address,zip_code,country_code,registered_at,last_invoice_at
+ERP-101,Anna Kowalska,ANNA.KOWALSKA@example.com,+48501100200,1988-04-12,Prosta 1,00001,PL,2022-01-11T09:00:00Z,2025-01-01T10:00:00Z
+ERP-102,Jan Nowak,jan.nowak@example.com,+48 501 200 300,1979-11-02,Dluga 7,30001,PL,2021-05-13T14:30:00Z,2024-12-15T12:00:00Z
+ERP-103,Maria Zielińska,m.zielinska@example.com,+48501300400,1992-08-23,Krotka 4,60001,PL,2023-02-19T11:15:00Z,2024-12-20T12:00:00Z
+ERP-104,Piotr Wiśniewski,piotr.w@example.com,+48501400500,1985-01-30,Lesna 9,80001,PL,2020-10-02T08:45:00Z,2024-11-02T12:00:00Z
+ERP-999,Adam Testowy,adam.testowy@example.com,+48501999999,1990-07-07,Testowa 99,99099,PL,2024-04-01T08:00:00Z,2024-12-01T12:00:00Z

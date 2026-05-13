@@ -1,0 +1,5 @@
+source_system,dataset_name,date_column,retention_days,policy_owner
+CRM,crm_customers,updated_at,1825,privacy-office
+ERP,erp_clients,last_invoice_at,1825,privacy-office
+REFERENCE,semantic_concepts,created_at,3650,data-governance
+COMPLIANCE,consent_preferences,consent_updated_at,3650,privacy-office

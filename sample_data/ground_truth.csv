@@ -1,0 +1,6 @@
+left_source_system,left_source_customer_id,right_source_system,right_source_customer_id,expected_decision
+CRM,CRM-001,ERP,ERP-101,MATCH
+CRM,CRM-002,ERP,ERP-102,MATCH
+CRM,CRM-003,ERP,ERP-103,POSSIBLE_MATCH
+CRM,CRM-004,ERP,ERP-104,MATCH
+CRM,CRM-005,ERP,ERP-999,NO_MATCH
