@@ -118,3 +118,13 @@ resources:
               - ${var.catalog}
               - --batch-id
               - ${var.batch_id}
+        - task_key: 04_standardize_and_mask
+          description: Standardizes and pseudonymizes Bronze CRM and ERP customer records.
+          depends_on:
+            - task_key: 03_semantic_mapping
+          job_cluster_key: gdpr_mapping_job_cluster
+          spark_python_task:
+            python_file: ./jobs/04_standardize_and_mask.py
+            parameters:
+              - --catalog
+              - ${var.catalog}

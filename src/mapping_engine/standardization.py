@@ -3,6 +3,9 @@
 import re
 import unicodedata
 
+from pyspark.sql import Column
+from pyspark.sql import functions as F
+
 _WHITESPACE_RE = re.compile(r"\s+")
 _NON_DIGIT_RE = re.compile(r"\D+")
 
@@ -80,3 +83,51 @@ def normalize_postal_code(value: str | None) -> str | None:
     if value is None:
         return None
     return value.replace(" ", "").upper()
+
+
+def empty_string_to_null(value: Column) -> Column:
+    normalized = F.trim(value.cast("string"))
+
+    return F.when(F.length(normalized) == 0, F.lit(None)).otherwise(normalized)
+
+
+def normalize_email_column(value: Column) -> Column:
+    return F.lower(empty_string_to_null(value))
+
+
+def normalize_phone_column(value: Column, default_country_code: str = "48") -> Column:
+    raw_value = F.trim(value.cast("string"))
+    has_plus = raw_value.startswith("+")
+    digits = F.regexp_replace(raw_value, r"\D+", "")
+
+    return (
+        F.when(F.length(digits) == 0, F.lit(None))
+        .when(has_plus, F.concat(F.lit("+"), digits))
+        .when(F.length(digits) == 9, F.concat(F.lit(f"+{default_country_code}"), digits))
+        .when(digits.startswith("00"), F.concat(F.lit("+"), F.substring(digits, 3, 100)))
+        .otherwise(F.concat(F.lit("+"), digits))
+    )
+
+
+def normalize_text_column(value: Column) -> Column:
+    normalized = F.lower(
+        F.regexp_replace(
+            F.trim(value.cast("string")),
+            r"\s+",
+            " ",
+        )
+    )
+
+    return F.when(F.length(normalized) == 0, F.lit(None)).otherwise(normalized)
+
+
+def normalize_postal_code_column(value: Column) -> Column:
+    normalized = F.upper(
+        F.regexp_replace(
+            F.trim(value.cast("string")),
+            r"\s+",
+            "",
+        )
+    )
+
+    return F.when(F.length(normalized) == 0, F.lit(None)).otherwise(normalized)
