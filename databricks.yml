@@ -94,6 +94,9 @@ resources:
               - ${var.reference_landing_path}
               - --batch-id
               - ${var.batch_id}
+              - --compliance-landing-path
+              - ${var.compliance_landing_path}
+
         - task_key: 02_profile_sources
           description: Profiles Bronze CRM and ERP source tables into metadata schema.
           depends_on:
@@ -125,6 +128,16 @@ resources:
           job_cluster_key: gdpr_mapping_job_cluster
           spark_python_task:
             python_file: ./jobs/04_standardize_and_mask.py
+            parameters:
+              - --catalog
+              - ${var.catalog}
+        - task_key: 05_apply_compliance_controls
+          description: Applies consent, deletion and retention controls to standardized customer records.
+          depends_on:
+            - task_key: 04_standardize_and_mask
+          job_cluster_key: gdpr_mapping_job_cluster
+          spark_python_task:
+            python_file: ./jobs/05_apply_compliance_controls.py
             parameters:
               - --catalog
               - ${var.catalog}

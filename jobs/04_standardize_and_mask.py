@@ -48,6 +48,7 @@ def build_standardized_customer_df(
     df: DataFrame,
     *,
     source_system: str,
+    source_dataset_name: str,
     pseudonymization_salt: str | None,
 ) -> DataFrame:
     from mapping_engine.masking import build_pseudo_id_column, hash_column
@@ -181,6 +182,7 @@ def build_standardized_customer_df(
 
     return df.select(
         F.lit(source_system).alias("source_system"),
+        F.lit(source_dataset_name).alias("source_dataset_name"),
         empty_string_to_null(source_record_id).alias("source_record_id"),
         standard_name.alias("standard_name"),
         standard_email.alias("standard_email"),
@@ -231,12 +233,14 @@ def main() -> None:
     crm_standardized = build_standardized_customer_df(
         crm_raw,
         source_system="crm",
+        source_dataset_name="crm_customers",
         pseudonymization_salt=args.pseudonymization_salt,
     )
-
+    
     erp_standardized = build_standardized_customer_df(
         erp_raw,
         source_system="erp",
+        source_dataset_name="erp_clients",
         pseudonymization_salt=args.pseudonymization_salt,
     )
 

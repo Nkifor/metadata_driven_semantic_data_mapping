@@ -22,8 +22,9 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--catalog", required=True)
     parser.add_argument("--crm-landing-path", required=True)
     parser.add_argument("--erp-landing-path", required=True)
-    parser.add_argument("--batch-id", required=True)
     parser.add_argument("--reference-landing-path", required=True)
+    parser.add_argument("--compliance-landing-path", required=True)
+    parser.add_argument("--batch-id", required=True)
 
     return parser.parse_args()
 
@@ -54,6 +55,24 @@ def main() -> None:
             landing_path=args.reference_landing_path,
             file_name="semantic_concepts.csv",
             target_table=f"{args.catalog}.bronze.semantic_concepts_raw",
+        ),
+        BronzeIngestSpec(
+            source_system="compliance",
+            landing_path=args.compliance_landing_path,
+            file_name="consent_preferences.csv",
+            target_table=f"{args.catalog}.bronze.consent_preferences_raw",
+        ),
+        BronzeIngestSpec(
+            source_system="compliance",
+            landing_path=args.compliance_landing_path,
+            file_name="deletion_requests.csv",
+            target_table=f"{args.catalog}.bronze.deletion_requests_raw",
+        ),
+        BronzeIngestSpec(
+            source_system="compliance",
+            landing_path=args.compliance_landing_path,
+            file_name="data_retention_policy.csv",
+            target_table=f"{args.catalog}.bronze.data_retention_policy_raw",
         ),
     ]
 
